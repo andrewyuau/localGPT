@@ -1,5 +1,7 @@
 # LocalGPT: Secure, Local Conversations with Your Documents 🌐
 
+🚨🚨 You can run localGPT on a pre-configured [Virtual Machine](https://bit.ly/localGPT). Make sure to use the code: PromptEngineering to get 50% off. I will get a small commision!
+
 **LocalGPT** is an open-source initiative that allows you to converse with your documents without compromising your privacy. With everything running locally, you can be assured that no data ever leaves your computer. Dive into the world of secure, local document interactions with LocalGPT.
 
 ## Features 🌟
@@ -94,7 +96,7 @@ Run as `docker run -it --mount src="$HOME/.cache",target=/root/.cache,type=bind 
 For testing, this repository comes with [Constitution of USA](https://constitutioncenter.org/media/files/constitution.pdf) as an example file to use.
 
 ## Ingesting your OWN Data.
-Put you files in the `SOURCE_DOCUMENTS` folder. You can put multiple folders within the `SOURCE_DOCUMENTS` folder and the code will recursively read your files.
+Put your files in the `SOURCE_DOCUMENTS` folder. You can put multiple folders within the `SOURCE_DOCUMENTS` folder and the code will recursively read your files.
 
 ### Support file formats:
 LocalGPT currently supports the following file formats. LocalGPT uses `LangChain` for loading these file formats. The code in `constants.py` uses a `DOCUMENT_MAP` dictionary to map a file format to the corresponding loader. In order to add support for another file format, simply add this dictionary with the file format and the corresponding loader from [LangChain](https://python.langchain.com/docs/modules/data_connection/document_loaders/).
@@ -193,6 +195,11 @@ Another option is to enable chat history. ***Note***: This is disabled by defaul
 python run_localGPT.py --use_history
 ```
 
+You can store user questions and model responses with flag `--save_qa` into a csv file `/local_chat_history/qa_log.csv`. Every interaction will be stored. 
+
+```shell
+python run_localGPT.py --qa_save
+```
 
 # Run the Graphical User Interface
 
