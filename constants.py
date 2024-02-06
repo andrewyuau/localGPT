@@ -28,7 +28,7 @@ CHROMA_SETTINGS = Settings(
 )
 
 # Context Window and Max New Tokens
-CONTEXT_WINDOW_SIZE = 4096
+CONTEXT_WINDOW_SIZE = 4096 #4096
 MAX_NEW_TOKENS = CONTEXT_WINDOW_SIZE  # int(CONTEXT_WINDOW_SIZE/4)
 
 #### If you get a "not enough space in the buffer" error, you should reduce the values below, start with half of the original values and keep halving the value until the error stops appearing
@@ -98,9 +98,13 @@ EMBEDDING_MODEL_NAME = "hkunlp/instructor-large"  # Uses 1.5 GB of VRAM (High Ac
 # MODEL_ID = "TheBloke/Llama-2-13b-Chat-GGUF"
 # MODEL_BASENAME = "llama-2-13b-chat.Q4_K_M.gguf"
 
-MODEL_ID = "TheBloke/Llama-2-7b-Chat-GGUF"
-MODEL_BASENAME = "llama-2-7b-chat.Q4_K_M.gguf"
+#MODEL_ID = "TheBloke/Llama-2-7b-Chat-GGUF"
+#MODEL_BASENAME = "llama-2-7b-chat.Q4_K_M.gguf"
 
+#MODEL_ID = "TheBloke/Mistral-7B-Instruct-v0.2-GGUF"
+#MODEL_BASENAME = "mistral-7b-instruct-v0.2.Q8_0.gguf"
+#MODEL_BASENAME = "mistral-7b-instruct-v0.2.Q5_K_M.gguf"
+#MODEL_BASENAME = "mistral-7b-instruct-v0.2.Q4_K_M.gguf"
 # MODEL_ID = "TheBloke/Mistral-7B-Instruct-v0.1-GGUF"
 # MODEL_BASENAME = "mistral-7b-instruct-v0.1.Q8_0.gguf"
 
@@ -165,6 +169,8 @@ MODEL_BASENAME = "llama-2-7b-chat.Q4_K_M.gguf"
 # MODEL_BASENAME = "WizardLM-7B-uncensored-GPTQ-4bit-128g.compat.no-act-order.safetensors"
 # MODEL_ID = "TheBloke/wizardLM-7B-GPTQ"
 # MODEL_BASENAME = "wizardLM-7B-GPTQ-4bit.compat.no-act-order.safetensors"
+MODEL_ID = "TheBloke/Mistral-7B-Instruct-v0.2-AWQ"
+MODEL_BASENAME = "model.safetensors.awq"
 
 ####
 #### (FOR GGML) (Quantized cpu+gpu+mps) models - check if they support llama.cpp

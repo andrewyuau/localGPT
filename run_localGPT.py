@@ -84,8 +84,9 @@ def load_model(device_type, model_id, model_basename=None, LOGGING=logging):
         model=model,
         tokenizer=tokenizer,
         max_length=MAX_NEW_TOKENS,
-        temperature=0.2,
+        temperature=0,
         # top_p=0.95,
+        top_p=0.1,
         repetition_penalty=1.15,
         generation_config=generation_config,
     )
