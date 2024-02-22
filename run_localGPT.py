@@ -38,6 +38,19 @@ from constants import (
     CHROMA_SETTINGS,
 )
 
+# logging.basicConfig(level=logging.DEBUG)
+# set up logging to file
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+                    datefmt='%m-%d %H:%M',
+                    filename='C:/Users/andre/code/myapp.log',
+                    filemode='w')
+# define a Handler which writes INFO messages or higher to the sys.stderr
+console = logging.StreamHandler()
+console.setLevel(logging.INFO)
+# add the handler to the root logger
+logging.getLogger('').addHandler(console)
+
 
 def load_model(device_type, model_id, model_basename=None, LOGGING=logging):
     """
@@ -85,11 +98,15 @@ def load_model(device_type, model_id, model_basename=None, LOGGING=logging):
         model=model,
         tokenizer=tokenizer,
         max_length=MAX_NEW_TOKENS,
-        temperature=0,
+        temperature=0.01,
         # top_p=0.95,
-        top_p=0.1,
-        repetition_penalty=1.15,
+        top_p=1,
+        # top_k=20,
+        repetition_penalty=1.176,
         generation_config=generation_config,
+        return_full_text=True,
+        do_sample=True,
+        pad_token_id=tokenizer.eos_token_id,
     )
 
     local_llm = HuggingFacePipeline(pipeline=pipe)
@@ -98,7 +115,7 @@ def load_model(device_type, model_id, model_basename=None, LOGGING=logging):
     return local_llm
 
 
-def retrieval_qa_pipline(device_type, use_history, promptTemplate_type="llama"):
+def retrieval_qa_pipline(device_type, use_history, promptTemplate_type="mistral"):
     """
     Initializes and returns a retrieval-based Question Answering (QA) pipeline.
 
@@ -138,7 +155,8 @@ def retrieval_qa_pipline(device_type, use_history, promptTemplate_type="llama"):
 
     # get the prompt template and memory if set by the user.
     prompt, memory = get_prompt_template(promptTemplate_type=promptTemplate_type, history=use_history)
-
+    logging.info(f"Prompt is: {prompt}")
+    
     # load the llm pipeline
     llm = load_model(device_type, model_id=MODEL_ID, model_basename=MODEL_BASENAME, LOGGING=logging)
 
@@ -210,7 +228,7 @@ def retrieval_qa_pipline(device_type, use_history, promptTemplate_type="llama"):
 )
 @click.option(
     "--model_type",
-    default="llama",
+    default="mistral",
     type=click.Choice(
         ["llama", "mistral", "non_llama"],
     ),

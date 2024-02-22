@@ -108,6 +108,7 @@ def load_quantized_model_qptq(model_id, model_basename, device_type, logging):
         device_map="auto",
         use_triton=False,
         quantize_config=None,
+        #torch_dtype=torch.float16, #for Falcon GPTQ
     )
     return model, tokenizer
 
@@ -153,7 +154,7 @@ def load_full_model(model_id, model_basename, device_type, logging):
             load_in_4bit=True,
             bnb_4bit_quant_type="nf4",
             bnb_4bit_compute_dtype=torch.float16,
-            max_memory={0: "15GB"},  # Uncomment this line with you encounter CUDA out of memory errors
+            max_memory={0: "12GB"},  # Uncomment this line with you encounter CUDA out of memory errors
         )
         model.tie_weights()
     return model, tokenizer

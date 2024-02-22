@@ -20,7 +20,7 @@ PERSIST_DIRECTORY = f"{ROOT_DIRECTORY}/DB"
 MODELS_PATH = "./models"
 
 # Can be changed to a specific number
-INGEST_THREADS = os.cpu_count() or 8
+INGEST_THREADS = os.cpu_count() or 6
 
 # Define the Chroma settings
 CHROMA_SETTINGS = Settings(
@@ -29,13 +29,13 @@ CHROMA_SETTINGS = Settings(
 )
 
 # Context Window and Max New Tokens
-CONTEXT_WINDOW_SIZE = 4096 #4096
+CONTEXT_WINDOW_SIZE = 1536 #4096
 MAX_NEW_TOKENS = CONTEXT_WINDOW_SIZE  # int(CONTEXT_WINDOW_SIZE/4)
 
 #### If you get a "not enough space in the buffer" error, you should reduce the values below, start with half of the original values and keep halving the value until the error stops appearing
 
-N_GPU_LAYERS = 100  # Llama-2-70B has 83 layers
-N_BATCH = 512
+N_GPU_LAYERS = 40 #100  # Llama-2-70B has 83 layers
+N_BATCH = 128  #512 https://github.com/ggerganov/llama.cpp/issues/2428
 
 ### From experimenting with the Llama-2-7B-Chat-GGML model on 8GB VRAM, these values work:
 # N_GPU_LAYERS = 20
@@ -58,17 +58,17 @@ DOCUMENT_MAP = {
 }
 
 # Default Instructor Model
-EMBEDDING_MODEL_NAME = "hkunlp/instructor-large"  # Uses 1.5 GB of VRAM (High Accuracy with lower VRAM usage)
+#EMBEDDING_MODEL_NAME = "hkunlp/instructor-large"  # Uses 1.5 GB of VRAM (High Accuracy with lower VRAM usage)
 
 ####
 #### OTHER EMBEDDING MODEL OPTIONS
 ####
 
-# EMBEDDING_MODEL_NAME = "hkunlp/instructor-xl" # Uses 5 GB of VRAM (Most Accurate of all models)
+EMBEDDING_MODEL_NAME = "hkunlp/instructor-xl" # Uses 5 GB of VRAM (Most Accurate of all models)
 # EMBEDDING_MODEL_NAME = "intfloat/e5-large-v2" # Uses 1.5 GB of VRAM (A little less accurate than instructor-large)
 # EMBEDDING_MODEL_NAME = "intfloat/e5-base-v2" # Uses 0.5 GB of VRAM (A good model for lower VRAM GPUs)
-# EMBEDDING_MODEL_NAME = "all-MiniLM-L6-v2" # Uses 0.2 GB of VRAM (Less accurate but fastest - only requires 150mb of vram)
-
+#EMBEDDING_MODEL_NAME = "all-MiniLM-L6-v2" # Uses 0.2 GB of VRAM (Less accurate but fastest - only requires 150mb of vram)
+#EMBEDDING_MODEL_NAME = "intfloat/e5-small-v2"
 ####
 #### MULTILINGUAL EMBEDDING MODELS
 ####
@@ -100,18 +100,62 @@ EMBEDDING_MODEL_NAME = "hkunlp/instructor-large"  # Uses 1.5 GB of VRAM (High Ac
 # MODEL_ID = "TheBloke/Llama-2-13b-Chat-GGUF"
 # MODEL_BASENAME = "llama-2-13b-chat.Q4_K_M.gguf"
 
-#MODEL_ID = "TheBloke/Llama-2-7b-Chat-GGUF"
-#MODEL_BASENAME = "llama-2-7b-chat.Q4_K_M.gguf"
+# MODEL_ID = "TheBloke/Llama-2-7b-Chat-GGUF"
+# MODEL_BASENAME = "llama-2-7b-chat.Q4_K_M.gguf"
 
-#MODEL_ID = "TheBloke/Mistral-7B-Instruct-v0.2-GGUF"
-#MODEL_BASENAME = "mistral-7b-instruct-v0.2.Q8_0.gguf"
+# MODEL_ID = "google/gemma-7b-it"
+# MODEL_ID = "google/gemma-2b-it"
+# MODEL_BASENAME = None
+MODEL_ID = "lmstudio-ai/gemma-2b-it-GGUF"
+# MODEL_BASENAME = "gemma-2b-it-q4_k_m.gguf"
+MODEL_BASENAME = "gemma-2b-it-q8_0.gguf"
+
+# MODEL_ID = "TheBloke/Mistral-7B-Instruct-v0.2-GGUF"
+# MODEL_BASENAME = "mistral-7b-instruct-v0.2.Q2_K.gguf" Bad How should I respond to a request for flexible work arrangements?
+# MODEL_BASENAME = "mistral-7b-instruct-v0.2.Q3_K_M.gguf"
+# MODEL_BASENAME = "mistral-7b-instruct-v0.2.Q4_0.gguf" Bad Do small business employers have any responsibilities under the casual conversion national employment standards?
+# MODEL_BASENAME = "mistral-7b-instruct-v0.2.Q4_K_M.gguf"
 #MODEL_BASENAME = "mistral-7b-instruct-v0.2.Q5_K_M.gguf"
-#MODEL_BASENAME = "mistral-7b-instruct-v0.2.Q4_K_M.gguf"
+#MODEL_BASENAME = "mistral-7b-instruct-v0.2.Q8_0.gguf"
+
+# MODEL_ID = "TheBloke/zephyr-7B-beta-GGUF"
+# MODEL_BASENAME = "zephyr-7b-beta.Q4_K_M.gguf"
+
+# MODEL_ID = "TheBloke/Falcon-7B-Instruct-GPTQ"
+# MODEL_BASENAME = "model.safetensors"
+
+# MODEL_ID = "TheBloke/open-llama-7b-open-instruct-GPTQ"
+# MODEL_BASENAME = "model.safetensors"
+
+# MODEL_ID = "TheBloke/Mistral-7B-OpenOrca-GGUF"
+# MODEL_BASENAME = "mistral-7b-openorca.Q4_0.gguf"
+
+# MODEL_ID = "TheBloke/Mistral-7B-OpenOrca-GPTQ"
+# MODEL_BASENAME = "model.safetensors"
+
+# MODEL_ID = "TheBloke/Mistral-7B-OpenOrca-AWQ"
+# MODEL_BASENAME = "model.safetensors.awq"
+
+# MODEL_ID = "Open-Orca/Mistral-7B-OpenOrca"
+# MODEL_BASENAME = None
+
+
+# MODEL_ID = "mistralai/Mistral-7B-Instruct-v0.2"
+# MODEL_BASENAME = None
+
+
 # MODEL_ID = "TheBloke/Mistral-7B-Instruct-v0.1-GGUF"
 # MODEL_BASENAME = "mistral-7b-instruct-v0.1.Q8_0.gguf"
 
 # MODEL_ID = "TheBloke/Llama-2-70b-Chat-GGUF"
 # MODEL_BASENAME = "llama-2-70b-chat.Q4_K_M.gguf"
+
+# MODEL_ID = "TheBloke/Mistral-7B-Instruct-v0.2-AWQ"
+# MODEL_BASENAME = "model.safetensors.awq"
+#MODEL_ID = "TheBloke/Mistral-7B-Instruct-v0.1-AWQ"
+#MODEL_BASENAME = "model.safetensors.awq"
+# MODEL_ID = "TheBloke/Mistral-7B-Instruct-v0.2-GPTQ"
+# MODEL_BASENAME = "model.safetensors"
 
 ####
 #### (FOR HF MODELS)
@@ -169,10 +213,10 @@ EMBEDDING_MODEL_NAME = "hkunlp/instructor-large"  # Uses 1.5 GB of VRAM (High Ac
 # MODEL_BASENAME = "Wizard-Vicuna-7B-Uncensored-GPTQ-4bit-128g.no-act.order.safetensors"
 # MODEL_ID = "TheBloke/WizardLM-7B-uncensored-GPTQ"
 # MODEL_BASENAME = "WizardLM-7B-uncensored-GPTQ-4bit-128g.compat.no-act-order.safetensors"
-# MODEL_ID = "TheBloke/wizardLM-7B-GPTQ"
-# MODEL_BASENAME = "wizardLM-7B-GPTQ-4bit.compat.no-act-order.safetensors"
-MODEL_ID = "TheBloke/Mistral-7B-Instruct-v0.2-AWQ"
-MODEL_BASENAME = "model.safetensors.awq"
+#MODEL_ID = "TheBloke/wizardLM-7B-GPTQ"
+#MODEL_BASENAME = "model.safetensors"
+#MODEL_BASENAME = "wizardLM-7B-GPTQ-4bit.compat.no-act-order.safetensors"
+
 
 ####
 #### (FOR GGML) (Quantized cpu+gpu+mps) models - check if they support llama.cpp
@@ -190,5 +234,5 @@ MODEL_BASENAME = "model.safetensors.awq"
 ### (*** MODEL_BASENAME is not actually used but have to contain .awq so the correct model loading is used ***)
 ### (*** Compute capability 7.5 (sm75) and CUDA Toolkit 11.8+ are required ***)
 ####
-# MODEL_ID = "TheBloke/Llama-2-7B-Chat-AWQ"
-# MODEL_BASENAME = "model.safetensors.awq"
+#MODEL_ID = "TheBloke/Llama-2-7B-Chat-AWQ"
+#MODEL_BASENAME = "model.safetensors.awq"
